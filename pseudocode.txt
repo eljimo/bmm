@@ -66,12 +66,20 @@ match() {
 	for players in priorityList {
 		game = placePlayerInGame(player,game)
 	}
+	return game
 }
 
 generatePriorityList(club,games) {
 	//TODO
 	//generate a list of players from highest priority to the lowest priority
-	return priorityList
+	//1. look at how recently the player has rested (Perhaps add a tiredness meter?)
+	//2. look at players with friends (Sort by skill level)
+	//3. sort the rest with skill level
+	var tempPlayerList = club.players
+	var priorityPlayerList = []
+	priorityPlayerList
+	
+	return priorityPlayerList
 }
 
 placePlayerInGame(player,game) {
