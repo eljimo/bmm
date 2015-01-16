@@ -1,0 +1,81 @@
+BMM
+
+Badminton Match Making
+
+Club
+{
+	"id":<String:UUID>,
+	"name":<String(127)>,
+	"sessionTime":<int:1~1024>,
+	"matchTime":<int:1~1024>,
+	"numberOfCourt":<int:1~1024>,
+	"players": [
+		{<Player1>},
+		{<Player2>},
+		{<Player3>},
+		...		
+	]
+}
+
+Player
+{
+	"id":<String:UUID>,
+	"name":<String(127)>,
+	"rating":<int:1~10>,
+	"gender":<String:male/female>,
+	"friends": [
+		{"id":<String:UUID of another player>},
+		{"id":<String:UUID of another player>}
+		...
+	]
+	"stamina":<int:1~100,time in minute for >
+}
+
+Game
+{
+	"id":<String:UUID>,
+	"gameNumber":<int:1~10>,
+	"courts": [{
+		"courtNumber":<int:1~10>,
+		"player1":<String:UUID of another player>,
+		"player2":<String:UUID of another player>,
+		"player3":<String:UUID of another player>,
+		"player4":<String:UUID of another player>
+		},{
+		"courtNumber":<int:1~10>,
+		"player1":<String:UUID of another player>,
+		"player2":<String:UUID of another player>,
+		"player3":<String:UUID of another player>,
+		"player4":<String:UUID of another player>
+		}...]
+	"restPlayers": [{
+		"player1":<String:UUID of another player>,
+		"player2":<String:UUID of another player>,
+		"player3":<String:UUID of another player>,
+		"player4":<String:UUID of another player>
+		...
+		}]
+}
+
+
+match() {
+	initialize new game
+	load club
+	load previous games
+	priorityList = generatePriorityList(club,games)
+	for players in priorityList {
+		game = placePlayerInGame(player,game)
+	}
+}
+
+generatePriorityList(club,games) {
+	//TODO
+	//generate a list of players from highest priority to the lowest priority
+	return priorityList
+}
+
+placePlayerInGame(player,game) {
+	//TODO
+	//place a player in a game, and return the game
+	return game
+}
