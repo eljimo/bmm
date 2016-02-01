@@ -9,12 +9,7 @@ Club
 	"sessionTime":<int:1~1024>,
 	"matchTime":<int:1~1024>,
 	"numberOfCourt":<int:1~1024>,
-	"players": [
-		{<Player1>},
-		{<Player2>},
-		{<Player3>},
-		...		
-	]
+	"players": [<list of players>]
 }
 
 Player
@@ -22,68 +17,49 @@ Player
 	"id":<String:UUID>,
 	"name":<String(127)>,
 	"rating":<int:1~10>,
+	"priority":<int:1~10>,
 	"gender":<String:male/female>,
 	"friends": [
 		{"id":<String:UUID of another player>},
 		{"id":<String:UUID of another player>}
 		...
 	]
-	"stamina":<int:1~100,time in minute for >
+}
+
+Session
+{
+	"currentGame":<int>
+	"games":[<list of games>]
 }
 
 Game
 {
 	"id":<String:UUID>,
 	"gameNumber":<int:1~10>,
-	"courts": [{
-		"courtNumber":<int:1~10>,
-		"player1":<String:UUID of another player>,
-		"player2":<String:UUID of another player>,
-		"player3":<String:UUID of another player>,
-		"player4":<String:UUID of another player>
-		},{
-		"courtNumber":<int:1~10>,
-		"player1":<String:UUID of another player>,
-		"player2":<String:UUID of another player>,
-		"player3":<String:UUID of another player>,
-		"player4":<String:UUID of another player>
-		}...]
-	"restPlayers": [{
-		"player1":<String:UUID of another player>,
-		"player2":<String:UUID of another player>,
-		"player3":<String:UUID of another player>,
-		"player4":<String:UUID of another player>
-		...
-		}]
+	"courts": [count1, count2...]
+}
+
+Court
+{
+	"courtNumber":<int:1~10>,
+	"player1":<String:UUID of another player>,
+	"player2":<String:UUID of another player>,
+	"player3":<String:UUID of another player>,
+	"player4":<String:UUID of another player>
 }
 
 
-match() {
+generateGame() {
 	initialize new game
 	load club
-	load previous games
-	priorityList = generatePriorityList(club,games)
-	for players in priorityList {
-		game = placePlayerInGame(player,game)
+	load session //previous games
+	updatePriority(club,session) //update priority of each player based on their previous game
+	new game(courts=COUNT_NUMBER)
+	for courts in game{
+		place a random player in the highest priority available
+		place a different random player based on skill relevance / skill / gender
+		place a different random player based on skill relevance / skill / gender
+		place a different random player based on skill relevance / skill / gender
 	}
-	return game
-}
-
-generatePriorityList(club,games) {
-	//TODO
-	//generate a list of players from highest priority to the lowest priority
-	//1. look at how recently the player has rested (Perhaps add a tiredness meter?)
-	//2. look at players with friends (Sort by skill level)
-	//3. sort the rest with skill level
-	var tempPlayerList = club.players
-	var priorityPlayerList = []
-	priorityPlayerList
-	
-	return priorityPlayerList
-}
-
-placePlayerInGame(player,game) {
-	//TODO
-	//place a player in a game, and return the game
 	return game
 }
