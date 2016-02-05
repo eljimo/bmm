@@ -18,6 +18,7 @@ Player
 	"name":<String(127)>,
 	"rating":<int:1~10>,
 	"priority":<int:1~10>,
+	"status":Enum of resting/playing/inactive
 	"gender":<String:male/female>,
 	"friends": [
 		{"id":<String:UUID of another player>},
@@ -48,18 +49,30 @@ Court
 	"player4":<String:UUID of another player>
 }
 
-
 generateGame() {
 	initialize new game
 	load club
 	load session //previous games
-	updatePriority(club,session) //update priority of each player based on their previous game
 	new game(courts=COUNT_NUMBER)
 	for courts in game{
 		place a random player in the highest priority available
-		place a different random player based on skill relevance / skill / gender
-		place a different random player based on skill relevance / skill / gender
-		place a different random player based on skill relevance / skill / gender
+		place a different random player based on skill relevance / friends / gender
+		place a different random player based on skill relevance / friends / gender
+		place a different random player based on skill relevance / friends / gender
+		reduce these players' priority by 1
 	}
+	for all unassigned players, if NOT game 1, increase priority by 1 (so after game 1, 
 	return game
 }
+
+select_weighted_random_players(selected_player, playerlist)
+(
+	SKILL_VARIANCE = 2
+	init random_player_pool in the format of {'jimmy': 30, 'denny': 50, 'daniel': 100, 'kevin': 20}, bigger number means more likely to be 'randomly' chosen. Each player's chance of being chosen is its number over total number.
+	for player in playerlist:
+		skill_difference = absolute(player.skill-selected_player.skill)
+		if  skill_difference <= 2
+			place player in random_player_pool
+			value = 100 - (skill_difference * 20 + player.isNotFriends * 20 + player.isDifferentGender * 20)
+	
+)
